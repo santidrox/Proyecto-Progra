@@ -2,12 +2,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class GestorAcademicoController {
-    private final List<Usuario> usuarios = new ArrayList<>();
-    private final List<Actividad> actividades = new ArrayList<>();
+    private final ArrayList<Usuario> usuarios = new ArrayList<>();
+    private final ArrayList<Actividad> actividades = new ArrayList<>();
     private Usuario usuarioActual;
     private int intentosFallidos;
 
@@ -32,6 +32,72 @@ public class GestorAcademicoController {
     public boolean isAccesoBloqueado() { return intentosFallidos >= 3; }
     public int getIntentosRestantes() { return Math.max(0, 3 - intentosFallidos); }
     public Usuario getUsuarioActual() { return usuarioActual; }
+
+    public void cerrarSesion() {
+        usuarioActual = null;
+        intentosFallidos = 0;
+    }
+
+    public int[] obtenerResumen(LocalDate dia) {
+        exigirSesion();
+        int total = 0, completadas = 0;
+        for (Actividad actividad : actividades) {
+            if (dia == null || actividad.getFechaEntrega().equals(dia)) {
+                total++;
+                if (actividad.isCompletada()) { completadas++; }
+            }
+        }
+        return new int[]{completadas, total, total == 0 ? 0 : completadas * 100 / total};
+    }
+
+    public List<Actividad> listar(String estado, String tipo, String texto, String orden, LocalDate dia) {
+        exigirSesion();
+        String busqueda = texto.trim().toLowerCase(Locale.ROOT);
+        ArrayList<Actividad> resultado = new ArrayList<>();
+
+        // Cada condición corresponde a un filtro de la pantalla.
+        for (Actividad actividad : actividades) {
+            boolean coincideEstado = "Todas".equals(estado)
+                    || ("Completadas".equals(estado) && actividad.isCompletada())
+                    || ("Pendientes".equals(estado) && !actividad.isCompletada());
+            boolean coincideTipo = "Todos".equals(tipo) || actividad.getTipo().equals(tipo);
+            boolean coincideDia = dia == null || actividad.getFechaEntrega().equals(dia);
+            String informacion = (actividad.getNombre() + " " + actividad.getDetalle()).toLowerCase(Locale.ROOT);
+            boolean coincideBusqueda = informacion.contains(busqueda);
+
+            if (coincideEstado && coincideTipo && coincideDia && coincideBusqueda) {
+                resultado.add(actividad);
+            }
+        }
+
+        // Ordenamiento por inserción: mueve cada elemento a su posición.
+        // Se ordena una copia para conservar el orden de registro del sistema.
+        if ("Fecha".equals(orden) || "Prioridad".equals(orden)) {
+            for (int i = 1; i < resultado.size(); i++) {
+                Actividad actual = resultado.get(i);
+                int posicion = i - 1;
+                while (posicion >= 0 && debeIrDespues(resultado.get(posicion), actual, orden)) {
+                    resultado.set(posicion + 1, resultado.get(posicion));
+                    posicion--;
+                }
+                resultado.set(posicion + 1, actual);
+            }
+        }
+        return resultado;
+    }
+
+    private boolean debeIrDespues(Actividad primera, Actividad segunda, String orden) {
+        if ("Fecha".equals(orden)) {
+            return primera.getFechaEntrega().isAfter(segunda.getFechaEntrega());
+        }
+        return valorPrioridad(primera.getPrioridad()) > valorPrioridad(segunda.getPrioridad());
+    }
+
+    private int valorPrioridad(String prioridad) {
+        if ("Alta".equals(prioridad)) { return 1; }
+        if ("Media".equals(prioridad)) { return 2; }
+        return 3;
+    }
 
     private void exigirSesion() {
         if (usuarioActual == null) { throw new IllegalStateException("Primero inicia sesión."); }
@@ -66,7 +132,7 @@ public class GestorAcademicoController {
 
     public List<Actividad> getActividades() {
         exigirSesion();
-        return Collections.unmodifiableList(new ArrayList<>(actividades));
+        return new ArrayList<>(actividades);
     }
 
     private void verificarActividad(Actividad actividad) {
