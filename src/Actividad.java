@@ -1,7 +1,6 @@
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public abstract class Actividad {
     private final String nombre;
@@ -20,7 +19,10 @@ public abstract class Actividad {
             throw new IllegalArgumentException("Selecciona una prioridad válida.");
         }
         this.nombre = nombre.trim();
-        this.fechaEntrega = Objects.requireNonNull(fechaEntrega, "Ingresa una fecha.");
+        if (fechaEntrega == null) {
+            throw new IllegalArgumentException("Ingresa una fecha.");
+        }
+        this.fechaEntrega = fechaEntrega;
         this.prioridad = prioridad;
         siguienteRecordatorio = LocalDateTime.now().plusHours(12);
     }
@@ -33,6 +35,21 @@ public abstract class Actividad {
     public LocalDateTime getSiguienteRecordatorio() { return siguienteRecordatorio; }
     public abstract String getTipo();
     public abstract String getDetalle();
+
+    // Se usa al recuperar datos del archivo o deshacer un cambio que no pudo guardarse.
+    void restaurarEstado(boolean completada, boolean activo, LocalDateTime siguiente) {
+        if (siguiente == null || (completada && activo)) {
+            throw new IllegalArgumentException("El estado guardado de la actividad no es válido.");
+        }
+        this.completada = completada;
+        this.recordatorioActivo = activo;
+        this.siguienteRecordatorio = siguiente;
+    }
+
+    public void reabrir() {
+        completada = false;
+        recordatorioActivo = false;
+    }
 
     public void marcarComoCompletada() {
         completada = true;
