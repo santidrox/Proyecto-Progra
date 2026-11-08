@@ -6,6 +6,7 @@ public class Main {
             @Override
             public void run() {
                 try {
+                    EstiloUVG.aplicar();
                     java.nio.file.Path carpeta = java.nio.file.Paths.get(
                             Main.class.getProtectionDomain().getCodeSource().getLocation().toURI());
                     if (java.nio.file.Files.isRegularFile(carpeta) || carpeta.getFileName().toString().equals("bin")) {

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-//Guarda directamente en la computadora local, falta sqlite
+// Persistencia local con las clases estándar de Java. Este archivo no es SQLite.
 public class RepositorioActividades {
     private final Path archivo;
 

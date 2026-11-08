@@ -5,6 +5,11 @@ Proyecto de POO de William Reyes, Santiago Escobar y Marlon Yaeggy.
 Esta aplicación de Java ayuda a organizar tareas, proyectos y exámenes. Incluye
 prioridades, filtros, calendario, ordenamiento, progreso diario y recordatorios.
 
+La interfaz usa blanco, gris claro y el verde tomado del logo UVG adjunto
+(RGB 0, 141, 54). El logo original se muestra pequeño en la esquina superior derecha
+del acceso y de la agenda. Se redujeron textos y se ajustaron botones, tabla y calendario.
+Los mensajes y las confirmaciones conservan el comportamiento de la versión anterior.
+
 ## Abrir desde el editor
 
 1. Extrae todo el ZIP.
@@ -54,6 +59,7 @@ para ejecutar esta versión.
 - `src`: clases Java de modelo, controlador, vista y persistencia.
 - `bin`: `.class` compilados.
 - `lib`: reservada para futuras librerías.
+- `assets`: logo original `logo-uvg.png`. También está en `bin/assets` para cargarlo como recurso.
 - `data`: información local creada durante el uso.
 - `tests`: pruebas de lógica y persistencia con datos temporales separados.
 
@@ -67,7 +73,14 @@ al controlador. El código de la aplicación no usa streams ni expresiones lambd
 Se compila con Java 17. Ejecuta el `main` de `Pruebas.java` y el de
 `PruebasPersistencia.java` para verificar la lógica y la lectura/escritura.
 Estas pruebas usan carpetas temporales diferentes de la agenda real.
-La revisión visual de las ventanas queda pendiente en una computadora con escritorio.
+Se renderizaron y revisaron los paneles reales de acceso y agenda con Java en modo
+sin pantalla, a tamaño normal y compacto. También se verificaron eventos de acceso,
+selección, finalización y filtros. Los cuadros de diálogo y el comportamiento de la
+ventana del sistema deben comprobarse en una computadora con escritorio.
+
+La vista utiliza composición: contiene un JFrame para la ventana y un JRootPane
+para su contenido. Esto permite revisar los mismos paneles sin abrir una ventana.
+`EstiloUVG` reúne colores, tipografía, botones y carga del logo, sin librerías externas.
 
 Antes de reemplazar una versión anterior, guarda una copia y prueba esta versión
 en una carpeta aparte. Los cambios no se han subido automáticamente a GitHub.
