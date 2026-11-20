@@ -1,3 +1,4 @@
+/** Actividad de evaluación que requiere una materia. */
 public class Examen extends Actividad {
     private final String materia;
 

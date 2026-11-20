@@ -2,6 +2,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/** Datos y comportamiento comunes de las actividades académicas. */
 public abstract class Actividad {
     private final String nombre;
     private final LocalDate fechaEntrega;

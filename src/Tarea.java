@@ -1,3 +1,4 @@
+/** Actividad de trabajo académico con una descripción. */
 public class Tarea extends Actividad {
     private final String descripcion;
 

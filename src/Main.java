@@ -1,5 +1,6 @@
 import javax.swing.SwingUtilities;
 
+/** Inicia Swing y conecta el controlador con el archivo SQLite del proyecto. */
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -13,7 +14,7 @@ public class Main {
                         carpeta = carpeta.getParent();
                     }
                     GestorAcademicoController controlador = new GestorAcademicoController(
-                            carpeta.resolve("data").resolve("actividades.xml"));
+                            carpeta.resolve("data").resolve("actividades.db"));
                     GestorAcademicoView vista = new GestorAcademicoView(controlador);
                     vista.setVisible(true);
                 } catch (Exception error) {

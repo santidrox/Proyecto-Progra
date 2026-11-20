@@ -1,11 +1,12 @@
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.nio.file.Path;
 
+/** Coordina el acceso, las actividades y el guardado solicitado desde la vista. */
 public class GestorAcademicoController {
     private final ArrayList<Usuario> usuarios = new ArrayList<>();
     private final ArrayList<Actividad> actividades = new ArrayList<>();
@@ -18,7 +19,7 @@ public class GestorAcademicoController {
     }
 
     public GestorAcademicoController(Path archivo) {
-        usuarios.add(new Usuario("william", "12345"));
+        usuarios.add(new Usuario("william", "UvG2026!"));
         repositorio = archivo == null ? null : new RepositorioActividades(archivo);
         if (repositorio != null) { actividades.addAll(repositorio.cargar()); }
     }

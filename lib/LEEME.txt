@@ -1,0 +1,19 @@
+Esta carpeta requiere el controlador JDBC real antes de ejecutar Main.
+Puedes ejecutar src/InstalarSQLite.java desde VS Code para descargarlos
+directamente en tu computadora. Si la red lo bloquea, usa las descargas manuales.
+
+Versiones compatibles propuestas:
+- sqlite-jdbc-3.46.1.3.jar (Xerial)
+- slf4j-api-1.7.36.jar
+- slf4j-nop-1.7.36.jar
+
+Las descargas externas estuvieron bloqueadas en el entorno de preparación.
+Estos archivos NO están incluidos. No se usan JAR vacíos ni simulados.
+Adjuntar los JAR permitirá completar la ejecución de PruebasSQLite.
+
+Descargas oficiales:
+https://github.com/xerial/sqlite-jdbc/releases/tag/3.46.1.3
+https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar
+https://repo.maven.apache.org/maven2/org/slf4j/slf4j-nop/1.7.36/slf4j-nop-1.7.36.jar
+
+VS Code detecta lib/**/*.jar mediante .vscode/settings.json.

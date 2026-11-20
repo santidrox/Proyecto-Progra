@@ -1,3 +1,4 @@
+/** Actividad que representa un proyecto académico. */
 public class Proyecto extends Actividad {
     private final String descripcion;
 

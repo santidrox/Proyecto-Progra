@@ -2,6 +2,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/** Representa las credenciales de la cuenta de demostración. */
 public class Usuario {
     private final String nombreUsuario;
     private final byte[] hashContrasena;

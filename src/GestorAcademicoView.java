@@ -270,7 +270,7 @@ public class GestorAcademicoView {
         resumenHoy.setMaximumSize(new Dimension(Integer.MAX_VALUE,24));
         lateral.add(fechas); cuerpo.add(lateral,BorderLayout.EAST); raiz.add(cuerpo);
         JLabel pie=new JLabel("Guardado automático"); pie.setFont(new Font("SansSerif",Font.PLAIN,11));
-        pie.setToolTipText("Los cambios se guardan en data/actividades.xml. Los avisos requieren la aplicación abierta.");
+        pie.setToolTipText("Los cambios se guardan en SQLite, en data/actividades.db. Los avisos requieren la aplicación abierta.");
         pie.setForeground(VERDE); raiz.add(pie,BorderLayout.SOUTH); refrescar(); raiz.revalidate(); raiz.repaint();
         temporizador.start();
         SwingUtilities.invokeLater(new Runnable() {
